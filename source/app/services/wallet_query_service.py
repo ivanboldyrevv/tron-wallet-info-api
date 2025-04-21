@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 
 from app.models import WalletQuery
-from app.exceptions import NotFoundException
+from app.exceptions import PageIndexException
 
 
 class WalletQueryService:
@@ -49,7 +49,7 @@ class WalletQueryService:
                         .all())
 
             if not entities:
-                raise NotFoundException(page, per_page)
+                raise PageIndexException(page, per_page)
 
             return entities
 

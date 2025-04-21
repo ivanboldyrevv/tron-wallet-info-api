@@ -64,6 +64,15 @@ async def test_get_wallet_queries_raise_on_wrong_per_page(client, wallet_data, d
 
 
 @pytest.mark.asyncio
+async def test_get_wallet_queries_raise_pagination_error(client, wallet_data, db_session):
+    post_response = await client.post("/wallet_info", json=wallet_data)
+    response_ok(post_response)
+
+    response = await client.get("/wallet_info", params={"page": 100})
+    assert response.status_code == 400
+
+
+@pytest.mark.asyncio
 async def test_get_wallet_queries_raise_value_error(client, db_session):
     response = await client.get("/wallet_info", params={"page": 100})
     assert response.status_code == 500

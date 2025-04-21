@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, AsyncMock
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.services.wallet_query_service import WalletQueryService
 from app.models import WalletQuery
-from app.exceptions import NotFoundException
+from app.exceptions import PageIndexException
 
 
 @pytest.fixture
@@ -90,7 +90,7 @@ async def test_select_wallet_queries_without_data(service, mock_factory_session)
 
     mock_session.execute.return_value = mock_execute_result
 
-    with pytest.raises(NotFoundException):
+    with pytest.raises(PageIndexException):
         await service.select_wallet_queries(page=1, per_page=10)
 
 

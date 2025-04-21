@@ -3,7 +3,7 @@ import pytest
 from app.database import AsyncDatabase
 from app.models import WalletQuery
 from app.services.wallet_query_service import WalletQueryService
-from app.exceptions import NotFoundException
+from app.exceptions import PageIndexException
 
 
 @pytest.fixture
@@ -74,7 +74,7 @@ async def test_selectWalletQueries_expectedEntity(service, db_session):
 
 @pytest.mark.asyncio
 async def test_selectWalletQueries_raiseException(service, db_session):
-    with pytest.raises(NotFoundException):
+    with pytest.raises(PageIndexException):
         await service.select_wallet_queries(100, 100)
 
 

@@ -12,7 +12,7 @@ from app.container import Container
 from app.services.tron_service import TronInfoService
 from app.services.wallet_query_service import WalletQueryService
 
-from app.exceptions import NotFoundException
+from app.exceptions import PageIndexException
 
 
 info_wallet = APIRouter(
@@ -72,10 +72,10 @@ async def get_wallet_queries(
             "total_items": total,
             "items": queries
         }
-    except NotFoundException as e:
+    except PageIndexException:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=e.msg
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Page {page} is out of range. Max available page: {total_pages}"
         )
     except Exception as e:
         raise HTTPException(

@@ -10,7 +10,7 @@ There are two endpoints:
 ### Installation and run
 
 ```bash
-git clone <url repository>
+git clone <url repository>.git
 cd <project path>
 ```
 

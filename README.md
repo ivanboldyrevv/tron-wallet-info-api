@@ -19,6 +19,8 @@ docker compose up -d
 docker exec tron_service alembic upgrade head
 ```
 
+Then go to your browser and open `http://localhost:8000/docs`. Test with open api docs!
+
 ### Structure
 
 - `routers/*` is a directory for storing API routes.

@@ -1,22 +1,54 @@
-Собеседование
+### Intro
 
-Написать микросервис, который будет выводить информацию по адресу в сети трон, его bandwidth, energy, и баланс trx, ендпоинт должен принимать входные данные - адрес.
-Каждый запрос писать в базу данных, с полями о том какой кошелек запрашивался.
-Написать юнит/интеграционные тесты
-У сервиса 2 ендпоинта
-- POST
-- GET для получения списка последних записей из БД, включая пагинацию,
-2 теста
-- интеграционный на ендпоинт
-- юнит на запись в бд
-Примечания: использовать FastAPI, аннотацию(typing), SQLAlchemy ORM, для удобства взаимодействия с троном можно использовать tronpy, для тестов - Pytest.
-
-По срокам выполнения тестового задания ограничений нет — Вы можете выполнять его в комфортном для вас режиме, столько времени, сколько считаете необходимым. Главное — подходите к задаче так, как считаете нужным и правильным. Выполненное задание отправьте ссылкой на git в этот чат.
-
-Если возникнут вопросы, будем рады помочь!
-
-Удачи!
+This is a test REST API application that allows you to get wallet information on the TRON network.
 
 
-Публичный адрес: TJ9Mk7TAuP8AyDwjU3Hjimo7GCyuRMoVcK
-Приватный ключ: 95bfebe54cff0a62a373bc762edd2fba50b4cad9f22296f6b6f115b53ca2b97d
+There are two endpoints:
+- `POST /wallet_info data = {"wallet_address": value}`. Use this for request wallet info. Response: `{bandwidth: value, energy: value, balance: value}`
+- `GET /wallet_info?page={required=True}&per_page={required=False}`. Get records of requests for wallet information.
+
+### Installation and run
+
+```bash
+git clone <url repository>
+cd <project path>
+```
+
+```
+docker compose up -d
+docker exec tron_service alembic upgrade head
+```
+
+### Structure
+
+- `routers/*` is a directory for storing API routes.
+- `schemas/*` — Data schemas used for validation and serialization.
+- `services/*` — Logic of interaction with the database, tron api and processing of business logic.
+- `tests/*` — Tests to cover basic scenarios (using pytest).
+- `container.py` - Container dependecies injection.
+- `database.py` - Database connection.
+- `exceptions.py` - Custom exception.
+- `models.py` — Models for the database that define the structure of tables.
+- `main.py` - Main file.
+
+
+### Tests
+In the tests directory. There are two types of tests:
+- integration
+- unit
+
+They require a test database to run. This process can be automated, but in this context it is done using the following operations. Please follow:
+
+```bash
+docker exec -it tron_postgres bash
+psql -U admin -d tron_db
+create database test_db;
+```
+
+
+Then -> `\q` and `ctrl + d`.
+
+Okay! Run tests:
+```bash
+docker exec tron_service pytest app/tests
+```

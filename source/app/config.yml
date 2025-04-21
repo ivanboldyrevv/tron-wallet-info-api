@@ -1,0 +1,5 @@
+tron:
+  network: "https://api.trongrid.io"
+
+database:
+  uri: "postgresql+asyncpg://admin:admin@postgres:5432/tron_db"
